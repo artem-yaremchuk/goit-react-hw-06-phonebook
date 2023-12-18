@@ -1,7 +1,13 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addContact } from "../../redux/actions";
+import { getContacts } from "../../redux/selectors";
 import css from "./ContactForm.module.css";
 
-const ContactForm = ({ contacts, addContact }) => {
+const ContactForm = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+
   const [data, setData] = useState({
     name: "",
     number: "",
@@ -21,14 +27,16 @@ const ContactForm = ({ contacts, addContact }) => {
       alert("Fill in the fields");
       return;
     }
-    const sameNames = contacts.some(
-      (contact) => contact.name.toLowerCase() === data.name.toLowerCase(),
-    );
+    const sameNames =
+      Array.isArray(contacts) &&
+      contacts.some(
+        (contact) => contact.name.toLowerCase() === data.name.toLowerCase(),
+      );
     if (sameNames) {
       alert(`${data.name} is already in contacts`);
       return;
     }
-    addContact(data);
+    dispatch(addContact(data));
     reset();
   };
 
