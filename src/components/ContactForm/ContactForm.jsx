@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addContact } from "../../redux/actions";
+import { addContact } from "../../redux/contactsSlice.js";
 import { getContacts } from "../../redux/selectors";
 import css from "./ContactForm.module.css";
 
@@ -27,11 +27,9 @@ const ContactForm = () => {
       alert("Fill in the fields");
       return;
     }
-    const sameNames =
-      Array.isArray(contacts) &&
-      contacts.some(
-        (contact) => contact.name.toLowerCase() === data.name.toLowerCase(),
-      );
+    const sameNames = contacts.some(
+      (contact) => contact.name.toLowerCase() === data.name.toLowerCase(),
+    );
     if (sameNames) {
       alert(`${data.name} is already in contacts`);
       return;
