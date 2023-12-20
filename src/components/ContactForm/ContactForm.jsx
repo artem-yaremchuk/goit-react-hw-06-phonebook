@@ -27,6 +27,7 @@ const ContactForm = () => {
       alert("Fill in the fields");
       return;
     }
+    console.log(contacts);
     const sameNames = contacts.some(
       (contact) => contact.name.toLowerCase() === data.name.toLowerCase(),
     );
