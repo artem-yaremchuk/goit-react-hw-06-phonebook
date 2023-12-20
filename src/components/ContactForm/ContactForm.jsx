@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addContact } from "../../redux/contactsSlice.js";
 import { getContacts } from "../../redux/selectors";
+import Notiflix from "notiflix";
 import css from "./ContactForm.module.css";
 
 const ContactForm = () => {
@@ -24,15 +25,14 @@ const ContactForm = () => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (data.name.trim() === "" || data.number.trim() === "") {
-      alert("Fill in the fields");
+      Notiflix.Notify.warning("Fill in the fields");
       return;
     }
-    console.log(contacts);
     const sameNames = contacts.some(
       (contact) => contact.name.toLowerCase() === data.name.toLowerCase(),
     );
     if (sameNames) {
-      alert(`${data.name} is already in contacts`);
+      Notiflix.Notify.info(`${data.name} is already in contacts`);
       return;
     }
     dispatch(addContact(data));
